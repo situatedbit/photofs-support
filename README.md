@@ -5,8 +5,7 @@
 ```
 PHOTOFS_DEPLOY_PATH
 PHOTOFS_GIT_PATH
-PHOTOFS_RVM_GEMSET
-PHOTOFS_RVM_RUBY
+PHOTOFS_RBENV_RUBY
 PHOTOFS_SOURCE_PATH
 PHOTOFS_MOUNT_PATH
 ```
@@ -14,9 +13,9 @@ PHOTOFS_MOUNT_PATH
 ## Tagging and Deploying New Version
 
 1. Update the GEM version.
-2. Apply version tag with `scripts/tag.sh`.
+2. Apply version tag with `tag-version.sh`.
 3. Push tags to remote: `git push origin --follow-tags`
-4. Deploy locally with `scripts/deploy.sh TREE-ISH`
+4. Deploy locally with `deploy.sh TREE-ISH`
 5. (Optional) install latest photofs gem to default gemset for photo-utils
 
 ## Install PhotoFS Gem for photo-utils

@@ -13,7 +13,8 @@ require_var()
 }
 
 require_var "${PHOTOFS_GIT_PATH}" "PHOTOFS_GIT_PATH"
+require_var "${PHOTOFS_RBENV_RUBY}" "PHOTOFS_RBENV_RUBY"
 
-VERSION=$(ruby $PHOTOFS_GIT_PATH/version.rb)
+VERSION=$(RBENV_VERSION=$PHOTOFS_RBENV_RUBY ruby $PHOTOFS_GIT_PATH/version.rb)
 
 git -C $PHOTOFS_GIT_PATH tag -a "v$VERSION" -m "version $VERSION"

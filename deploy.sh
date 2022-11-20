@@ -13,8 +13,7 @@ require_var()
 
 require_var "${PHOTOFS_DEPLOY_PATH}" "PHOTOFS_DEPLOY_PATH"
 require_var "${PHOTOFS_GIT_PATH}" "PHOTOFS_GIT_PATH"
-require_var "${PHOTOFS_RVM_GEMSET}" "PHOTOFS_RVM_GEMSET"
-require_var "${PHOTOFS_RVM_RUBY}" "PHOTOFS_RVM_RUBY"
+require_var "${PHOTOFS_RBENV_RUBY}" "PHOTOFS_RBENV_RUBY"
 
 if [[ -z ${TREEISH}  ]]; then
   echo "Missing GIT-TREE-ISH argument."
@@ -32,19 +31,6 @@ unzip $PHOTOFS_DEPLOY_PATH/$TREEISH.zip -d $PHOTOFS_DEPLOY_PATH/$TREEISH
 rm -fv $PHOTOFS_DEPLOY_PATH/latest
 ln -sv $PHOTOFS_DEPLOY_PATH/$TREEISH $PHOTOFS_DEPLOY_PATH/latest
 
-# Load RVM into a shell session *as a function*
-if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
-  # First try to load from a user install
-  source "$HOME/.rvm/scripts/rvm"
-elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
-  # Then try to load from a root install
-  source "/usr/local/rvm/scripts/rvm"
-else
-  printf "ERROR: An RVM installation was not found.\n"
-fi
-
-rvm use $PHOTOFS_RVM_RUBY@$PHOTOFS_RVM_GEMSET >/dev/null
-
-(cd $PHOTOFS_DEPLOY_PATH/latest; gem install bundler)
-(cd $PHOTOFS_DEPLOY_PATH/latest; bundle install)
-(cd $PHOTOFS_DEPLOY_PATH/latest; bundle update)
+(cd $PHOTOFS_DEPLOY_PATH/latest; RBENV_VERSION=$PHOTOFS_RBENV_RUBY gem install bundler)
+(cd $PHOTOFS_DEPLOY_PATH/latest; RBENV_VERSION=$PHOTOFS_RBENV_RUBY bundle install)
+(cd $PHOTOFS_DEPLOY_PATH/latest; RBENV_VERSION=$PHOTOFS_RBENV_RUBY bundle update)
